@@ -10,7 +10,8 @@ class Form extends Component {
             maildone:true,
             phno:true,
             passworddone:true,
-            datedone:true
+            datedone:true,
+            urldone:true
             
         }
     }
@@ -39,8 +40,10 @@ class Form extends Component {
         this.lastNameValidation();
         console.log(this.state)
         this.mailValidation();
-        this.mobileNumberValidation();
+       // this.mobileNumberValidation();
         this.passwordValidation();
+    this.urlVaditation();
+        this.datevalidation();
         
         // this.setState({
         //     done: true
@@ -82,6 +85,7 @@ class Form extends Component {
 
     mobileNumberValidation = event => {
         var a = this.state.mobilenumber;
+      
         var result2 =isNaN(a) || a.length!==10;
         console.log(result2);
         console.log(a);
@@ -131,32 +135,57 @@ if(mm<10){
         datedone:!result5
     })
 }
-    render() {
+
+urlVaditation =event =>{
+    var url1=this.state.url;
+    var url=url1+" ";
+    if(url.length === "")
+    {
+        this.setState({
+            urldone:false
+        })
+    }
+
+   else if (url.startsWith('https://')){
+    this.setState({
+        urldone:true
+    })
+   }
+  else{
+    this.setState({
+        urldone:false
+    })
+      }
+}
+render() {
         return (
             <div>
+                <h1>FORM</h1>
                 <form onSubmit={this.submitForm} className="form">
 
                     <label > firstname</label>
                     <input type="text"
                         name='firstname'
                         required
+                       
                         value={this.state.firstname}
                         onChange={this.handleChange} />
                      { this.state.fname ?
                              null 
                              :<span>{"Enter valid name"}</span>}
-
+                            <br/>
                     <label > lastname</label>
                     <input type="text"
                         name='lastname'
                         required
+                       
                         value={this.state.lastname}
                         onChange={this.handleChange}
                     />
                     { this.state.lname ?
                              null 
                              :<span>{"Enter valid name"}</span>}
-
+                            <br/>
                     <label >mailid</label>
                     <input type="email"
                         name='email'
@@ -165,7 +194,7 @@ if(mm<10){
                     { this.state.maildone ?
                              null 
                              :<span>{"Enter valid mail"}</span>}
-
+                            <br/>
                     <label > password</label>
                     <input type="password"
                         name='password'
@@ -175,7 +204,7 @@ if(mm<10){
                     { this.state.passworddone ?
                              null 
                              :<span>{"Enter Strong password"}</span>}
-
+                        <br/>
                     <label> DOB</label>
                     <input
                         name='dob'
@@ -187,45 +216,57 @@ if(mm<10){
                     { this.state.datedone ?
                              null 
                              :<span>{"Enter valid Date"}</span>}
-
+                            <br/>
 
                     <label >MobileNumber</label>
                     <input
                         name='mobilenumber'
-                        type='text'
+                        type='tel'
+                        maxLength='10'
+                        pattern="[0-9]{10}"
                         value={this.state.mobilenumber}
                         onChange={this.handleChange}
                     />
                     { this.state.phno ?
                              null 
                              :<span>{"Enter valid mobilenumber"}</span>}
-
+                            <br/>
 
 
                     <label >Gender</label>
                     <div>
 
-                        <label for="male">
+                        <label >
                             <input type="radio" value="male" id='male' name='gender' checked={true} />
                             male
                             </label>
 
-                        <label for="female" >
+                        <label  >
                             <input type="radio" value="female" id='female' name='gender' />
                             female
                             </label>
 
-                        <label for='others'>
+                        <label >
                             <input type="radio" value="others" id='others' name='gender' />
                             Others
                             </label>
                         
                     </div>
+                        <label>Image</label>
+                        <input type="file"
+                        accept="image/png, image/jpeg"
+                        />
+                        <label>URL</label>
+                        <input type="text"
+                        name='url'
+                        value={this.state.url}
+                        onChange={this.handleChange}/>
+                    { this.state.urldone ?
+                             null 
+                             :<span>{"Enter valid URL"}</span>}
 
-
-
-
-
+                        <br/>
+                        
                     <input type="submit" value="Submit" />
 
                 </form>

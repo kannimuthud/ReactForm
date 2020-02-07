@@ -11,3 +11,6 @@ body{
     /* flex-direction: column; */
     justify-content: center;
 }
+span{
+    color: red;
+}
